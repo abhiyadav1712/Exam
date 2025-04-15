@@ -1,0 +1,43 @@
+# Replace 'your_key.pem', 'ubuntu', and 'your_ec2_instance_ip' with your actual values.
+
+# I. Copy a file named example.txt from the /home/ubuntu directory on the EC2 instance to the /local_backup directory on your local machine.
+scp -i your_key.pem ubuntu@your_ec2_instance_ip:/home/ubuntu/example.txt /local_backup/
+
+# II. Copy multiple files (file1.txt, file2.txt, file3.txt) from the /home/ubuntu/files directory on the EC2 instance to /local_files on your local machine.
+scp -i your_key.pem ubuntu@your_ec2_instance_ip:/home/ubuntu/files/file1.txt /local_files/
+scp -i your_key.pem ubuntu@your_ec2_instance_ip:/home/ubuntu/files/file2.txt /local_files/
+scp -i your_key.pem ubuntu@your_ec2_instance_ip:/home/ubuntu/files/file3.txt /local_files/
+
+#Alternatively for multiple files in the same directory, if your shell support the braces expansion:
+#scp -i your_key.pem ubuntu@your_ec2_instance_ip:/home/ubuntu/files/{file1.txt,file2.txt,file3.txt} /local_files/
+
+# III. Copy the entire /var/www directory from the EC2 instance to a local /web_backup directory.
+scp -r -i your_key.pem ubuntu@your_ec2_instance_ip:/var/www/ /web_backup/
+
+# IV. Transfer a file named report.csv from the /local_reports directory on your local machine to the /home/$username/reports directory on the EC2 instance.
+scp -i your_key.pem /local_reports/report.csv ubuntu@your_ec2_instance_ip:/home/$username/reports/
+
+# V. Copy multiple files (doc1.pdf, doc2.pdf, doc3.pdf) from the local /documents directory to the /home/$username/docs directory on the EC2 instance.
+scp -i your_key.pem /documents/doc1.pdf ubuntu@your_ec2_instance_ip:/home/$username/docs/
+scp -i your_key.pem /documents/doc2.pdf ubuntu@your_ec2_instance_ip:/home/$username/docs/
+scp -i your_key.pem /documents/doc3.pdf ubuntu@your_ec2_instance_ip:/home/$username/docs/
+
+#Alternatively for multiple files in the same directory, if your shell support the braces expansion:
+#scp -i your_key.pem /documents/{doc1.pdf,doc2.pdf,doc3.pdf} ubuntu@your_ec2_instance_ip:/home/$username/docs/
+
+# VI. Transfer the entire /images directory from the local machine to the /home/$username/media directory on the EC2 instance.
+scp -r -i your_key.pem /images/ ubuntu@your_ec2_instance_ip:/home/$username/media/
+
+# VII. Use SCP with compression enabled to transfer a large file from the local machine to the EC2 instance.
+scp -C -i your_key.pem /path/to/large_file.tar.gz ubuntu@your_ec2_instance_ip:/home/$username/large_files/
+
+# VIII. Ensure that file permissions are preserved during the transfer of any directory.
+scp -rp -i your_key.pem /local/source/directory/ ubuntu@your_ec2_instance_ip:/remote/destination/directory/
+# or
+scp -rp -i your_key.pem ubuntu@your_ec2_instance_ip:/remote/source/directory/ /local/destination/directory/
+# the -p flag preserves permissions. and -r for recursivity for directories.
+
+# IX. Use verbose mode to display detailed output of the file transfer process for troubleshooting.
+scp -v -i your_key.pem /local/source/file.txt ubuntu@your_ec2_instance_ip:/remote/destination/
+# or
+scp -rvp -i your_key.pem ubuntu@your_ec2_instance_ip:/remote/source/directory/ /local/destination/directory/
